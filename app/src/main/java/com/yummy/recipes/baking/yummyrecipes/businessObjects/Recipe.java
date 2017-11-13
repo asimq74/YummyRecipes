@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.annotations.SerializedName;
+
 import org.json.JSONObject;
 
 /**
@@ -13,11 +15,17 @@ import org.json.JSONObject;
 
 public class Recipe {
 
+	@SerializedName(value = "id")
 	private Integer id;
+	@SerializedName(value = "image")
 	private String image;
+	@SerializedName(value = "ingredients")
 	private List<Ingredient> ingredients = new ArrayList<>();
+	@SerializedName(value = "name")
 	private String name;
+	@SerializedName(value = "servings")
 	private Integer servings;
+	@SerializedName(value = "steps")
 	private List<Step> steps = new ArrayList<>();
 
 	public Integer getId() {

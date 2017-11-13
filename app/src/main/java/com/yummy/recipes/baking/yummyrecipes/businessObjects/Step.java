@@ -1,15 +1,22 @@
 package com.yummy.recipes.baking.yummyrecipes.businessObjects;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by U1C306 on 11/10/2017.
  */
 
 public class Step {
 
+	@SerializedName(value ="description")
 	private String description;
+	@SerializedName(value ="id")
 	private Integer id;
+	@SerializedName(value ="shortDescription")
 	private String shortDescription;
+	@SerializedName(value ="thumbnailURL")
 	private String thumbnailURL;
+	@SerializedName(value ="videoURL")
 	private String videoURL;
 
 	public String getDescription() {

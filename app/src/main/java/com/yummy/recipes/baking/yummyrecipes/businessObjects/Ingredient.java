@@ -1,13 +1,18 @@
 package com.yummy.recipes.baking.yummyrecipes.businessObjects;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by U1C306 on 11/10/2017.
  */
 
 public class Ingredient {
 
+	@SerializedName(value ="ingredient")
 	private String ingredient;
+	@SerializedName(value ="measure")
 	private String measure;
+	@SerializedName(value ="quantity")
 	private Double quantity;
 
 	public String getIngredient() {
