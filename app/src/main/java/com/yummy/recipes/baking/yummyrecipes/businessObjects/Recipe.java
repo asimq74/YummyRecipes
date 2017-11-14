@@ -9,24 +9,32 @@ import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONObject;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by U1C306 on 11/10/2017.
  */
 
-public class Recipe {
+public class Recipe extends RealmObject {
 
 	@SerializedName(value = "id")
+	@PrimaryKey
 	private Integer id;
 	@SerializedName(value = "image")
 	private String image;
 	@SerializedName(value = "ingredients")
-	private List<Ingredient> ingredients = new ArrayList<>();
+	private RealmList<Ingredient> ingredients = new RealmList<>();
 	@SerializedName(value = "name")
 	private String name;
 	@SerializedName(value = "servings")
 	private Integer servings;
 	@SerializedName(value = "steps")
-	private List<Step> steps = new ArrayList<>();
+	private RealmList<Step> steps = new RealmList<>();
+
+	public Recipe() {
+	}
 
 	public Integer getId() {
 		return id;
@@ -60,7 +68,7 @@ public class Recipe {
 		this.image = image;
 	}
 
-	public void setIngredients(List<Ingredient> ingredients) {
+	public void setIngredients(RealmList<Ingredient> ingredients) {
 		this.ingredients = ingredients;
 	}
 
@@ -72,7 +80,7 @@ public class Recipe {
 		this.servings = servings;
 	}
 
-	public void setSteps(List<Step> steps) {
+	public void setSteps(RealmList<Step> steps) {
 		this.steps = steps;
 	}
 }

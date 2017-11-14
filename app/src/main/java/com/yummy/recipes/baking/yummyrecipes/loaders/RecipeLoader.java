@@ -1,40 +1,67 @@
-package com.yummy.recipes.baking.yummyrecipes.util;
+package com.yummy.recipes.baking.yummyrecipes.loaders;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.AsyncTask;
+import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
-import com.yummy.recipes.baking.yummyrecipes.businessObjects.Ingredient;
 import com.yummy.recipes.baking.yummyrecipes.businessObjects.Recipe;
-import com.yummy.recipes.baking.yummyrecipes.businessObjects.Step;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.yummy.recipes.baking.yummyrecipes.util.RecipesDownloaderTask;
+import com.yummy.recipes.baking.yummyrecipes.util.Util;
 
 import io.realm.Realm;
-import io.realm.RealmList;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by U1C306 on 11/10/2017.
+ * Created by U1C306 on 11/14/2017.
  */
 
-public class RecipesDownloaderTask extends AsyncTask<String, Void, List<Recipe>> {
+public class RecipeLoader extends AsyncTaskLoader<List<Recipe>> {
+
+	public RecipeLoader(Context context) {
+		super(context);
+	}
 
 	@Override
-	protected List<Recipe> doInBackground(String... params) {
-		String urlString = params[0];
+	public List<Recipe> loadInBackground() {
+		final List<Recipe> recipes = new ArrayList<>();
+		try(Realm realm = Realm.getDefaultInstance()) {
+			realm.executeTransaction(new Realm.Transaction() {
+				@Override
+				public void execute(Realm realm) {
+					RealmQuery<Recipe> query = realm.where(Recipe.class);
+					RealmResults<Recipe> results =  query.findAll();
+					recipes.addAll(realm.copyFromRealm(results));
+					if (recipes.isEmpty()) {
+						recipes.addAll(getRecipes());
+					}
+					Log.d(getClass().getSimpleName(), String.format("Results: %s", results));
+				}
+			});
+		} catch (Exception e) {
+			Log.e(getClass().getSimpleName(), "caught an exception while storing recipes ", e);
+		}
+		return recipes;
+	}
+
+	final String TAG = this.getClass().getSimpleName();
+
+	public List<Recipe> getRecipes() {
+		return collectRecipes("https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json");
+	}
+
+	protected List<Recipe> collectRecipes(String urlString) {
 		String fileContentString = "";
 		List<Recipe> recipes = new ArrayList<>();
 		try {
@@ -73,4 +100,5 @@ public class RecipesDownloaderTask extends AsyncTask<String, Void, List<Recipe>>
 		Response response = client.newCall(request).execute();
 		return response.body().string();
 	}
+
 }

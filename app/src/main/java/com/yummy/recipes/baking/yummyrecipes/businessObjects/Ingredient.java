@@ -2,11 +2,13 @@ package com.yummy.recipes.baking.yummyrecipes.businessObjects;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+
 /**
  * Created by U1C306 on 11/10/2017.
  */
 
-public class Ingredient {
+public class Ingredient extends RealmObject {
 
 	@SerializedName(value ="ingredient")
 	private String ingredient;
@@ -14,6 +16,9 @@ public class Ingredient {
 	private String measure;
 	@SerializedName(value ="quantity")
 	private Double quantity;
+
+	public Ingredient() {
+	}
 
 	public String getIngredient() {
 		return ingredient;

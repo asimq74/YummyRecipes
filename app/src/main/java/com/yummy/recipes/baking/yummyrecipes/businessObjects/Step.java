@@ -2,14 +2,20 @@ package com.yummy.recipes.baking.yummyrecipes.businessObjects;
 
 import com.google.gson.annotations.SerializedName;
 
+import io.realm.RealmObject;
+
 /**
  * Created by U1C306 on 11/10/2017.
  */
 
-public class Step {
+public class Step extends RealmObject {
 
 	@SerializedName(value ="description")
 	private String description;
+
+	public Step() {
+	}
+
 	@SerializedName(value ="id")
 	private Integer id;
 	@SerializedName(value ="shortDescription")
