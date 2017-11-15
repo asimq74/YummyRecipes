@@ -65,4 +65,14 @@ public class Step extends RealmObject {
 		this.videoURL = videoURL;
 	}
 
+	@Override
+	public String toString() {
+		return "Step{" +
+				"description='" + description + '\'' +
+				", id=" + id +
+				", shortDescription='" + shortDescription + '\'' +
+				", thumbnailURL='" + thumbnailURL + '\'' +
+				", videoURL='" + videoURL + '\'' +
+				'}';
+	}
 }

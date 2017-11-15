@@ -21,16 +21,4 @@ public class Util {
 
 	private final static String TAG = "Util";
 
-	public static List<Recipe> getRecipes() {
-		List<Recipe> recipes = new ArrayList<>();
-		try {
-			recipes = new RecipesDownloaderTask().execute("https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json").get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			Log.e(TAG, "caught an exception while downloading file contents ", e);
-		} finally {
-			return recipes;
-		}
-	}
-
 }

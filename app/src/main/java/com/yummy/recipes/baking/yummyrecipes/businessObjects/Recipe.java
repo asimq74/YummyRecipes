@@ -1,6 +1,7 @@
 package com.yummy.recipes.baking.yummyrecipes.businessObjects;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +46,7 @@ public class Recipe extends RealmObject {
 	}
 
 	public List<Ingredient> getIngredients() {
-		return ingredients;
+		return Arrays.asList(ingredients.toArray(new Ingredient[ingredients.size()]));
 	}
 
 	public String getName() {
@@ -57,7 +58,7 @@ public class Recipe extends RealmObject {
 	}
 
 	public List<Step> getSteps() {
-		return steps;
+		return Arrays.asList(steps.toArray(new Step[steps.size()]));
 	}
 
 	public void setId(Integer id) {
@@ -82,5 +83,17 @@ public class Recipe extends RealmObject {
 
 	public void setSteps(RealmList<Step> steps) {
 		this.steps = steps;
+	}
+
+	@Override
+	public String toString() {
+		return "Recipe{" +
+				"id=" + id +
+				", image='" + image + '\'' +
+				", ingredients=" + getIngredients() +
+				", name='" + name + '\'' +
+				", servings=" + servings +
+				", steps=" + getSteps() +
+				'}';
 	}
 }

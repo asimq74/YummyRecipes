@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 	@Override
 	public void onLoadFinished(Loader<List<Recipe>> loader, List<Recipe> data) {
 		Log.d(getClass().getSimpleName(), String.format("data: %s", data));
+		Log.d(getClass().getSimpleName(), String.format("data size: %s", data.size()));
 	}
 
 	@Override
