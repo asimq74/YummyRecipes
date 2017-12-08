@@ -7,6 +7,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.yummy.recipes.baking.yummyrecipes.businessObjects.Recipe;
@@ -21,9 +23,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		// get the reference of RecyclerView
+		recyclerView = findViewById(R.id.recyclerView);
+		// set a LinearLayoutManager with default vertical orientation
+		LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+		recyclerView.setLayoutManager(linearLayoutManager);
 		prepareLoader(RECIPE_LOADER);
 	}
 
+	private RecyclerView recyclerView;
 	private static final int RECIPE_LOADER = 0;
 
 	@Override
@@ -35,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 	public void onLoadFinished(Loader<List<Recipe>> loader, List<Recipe> data) {
 		Log.d(getClass().getSimpleName(), String.format("data: %s", data));
 		Log.d(getClass().getSimpleName(), String.format("data size: %s", data.size()));
+		RecipeAdapter recipeAdapter = new RecipeAdapter(this, data);
+		recyclerView.setAdapter(recipeAdapter);
 	}
 
 	@Override
