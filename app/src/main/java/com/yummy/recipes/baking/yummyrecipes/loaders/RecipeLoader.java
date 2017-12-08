@@ -67,7 +67,7 @@ public class RecipeLoader extends AsyncTaskLoader<List<Recipe>> {
 				}
 			});
 		} catch (Exception e) {
-			Log.e(getClass().getSimpleName(), "caught an exception while storing recipes ", e);
+			Log.e(getClass().getSimpleName(), "caught an exception while storing the recipes ", e);
 		}
 		if (recipes.isEmpty()) {
 			recipes.addAll(getRecipes());
